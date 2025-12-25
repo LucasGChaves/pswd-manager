@@ -1,9 +1,13 @@
 package com.example.app.repository;
 
 import com.example.app.domain.model.User;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
-public interface UserRepository extends JpaRepository<User, Integer> {
+import java.util.UUID;
 
+public interface UserRepository extends JpaRepository<User, UUID> {
+    @Query("SELECT u FROM User u WHERE u.email = :email")
+    User findUserByEmail(@Param("email") String email);
 }

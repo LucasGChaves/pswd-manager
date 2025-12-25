@@ -4,6 +4,8 @@ import com.example.app.domain.model.User;
 import com.example.app.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -14,7 +16,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public User getUser(@PathVariable int id) {
+    public User getUser(@PathVariable UUID id) {
         return userService.getUserByID(id);
     }
 
@@ -22,5 +24,16 @@ public class UserController {
     @ResponseBody
     public User createUser(@RequestBody User user) {
         return userService.createUser(user);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseBody
+    User updateUser(@PathVariable UUID id, @RequestBody User user) {
+        return userService.updateUser(id, user);
+    }
+
+    @DeleteMapping("/{id}")
+    void deleteUser(@PathVariable UUID id) {
+        userService.removeUser(id);
     }
 }
